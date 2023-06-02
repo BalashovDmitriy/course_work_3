@@ -39,24 +39,40 @@ def create_instances():
         instances.append(Operation(id_, new_date, state, operation_amount, description, to, from_))
     return instances
 
+
 def print_result(operation):
     if operation.state == 'EXECUTED':
         print(f'{operation.date_} {operation.description}')
+
         if operation.from_:
             numbers = operation.from_.split()
             if len(numbers[-1]) == 16:
-                format_card(numbers[-1])
+                format_card(numbers)
             elif len(numbers[-1]) == 20:
-                format_account(numbers[-1])
+                format_account(numbers)
+            print(" -> ", end="")
+            numbers = operation.to.split()
+            if len(numbers[-1]) == 16:
+                format_card(numbers)
+            elif len(numbers[-1]) == 20:
+                format_account(numbers)
+            print()
         else:
             print(f"Счёт **{operation.to[-4:]}")
+
         print(f'{operation.operation_amount["amount"]} {operation.operation_amount["currency"]["name"]}')
         print()
         return True
     return False
 
+
 def format_account(nums):
-    pass
+    print(f"{nums[0]} **{nums[-1][-4:]}", end="")
+
 
 def format_card(nums):
-    pass
+    formatted_card = f'{nums[-1][:4]} {nums[-1][4:6]}** **** {nums[-1][-4:]}'
+    for element in nums:
+        if element != nums[-1]:
+            print(element, end=" ")
+    print(formatted_card, end="")

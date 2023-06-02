@@ -6,7 +6,6 @@ def main():
     counter = 0
     for operation in reversed(operations):
         if counter < 5:
-            print(operation)
             if print_result(operation):
                 counter += 1
 
