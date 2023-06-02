@@ -1,4 +1,5 @@
 import json
+from datetime import datetime
 from classes import Operation
 
 FILE = "operations.json"
@@ -18,11 +19,15 @@ def create_instances():
         if operation:
             print(operation)
             id_ = operation['id']
+
             date_ = operation['date']
+            thedate = datetime.fromisoformat(date_)
+            newdate = f'{thedate.day}.{thedate.month}.{thedate.year}'
+
             state = operation['state']
             operation_amount = operation['operationAmount']
             description = operation['description']
             from_ = operation.get('from')
             to = operation['to']
-            instances.append(Operation(id_, date_, state, operation_amount, description, to, from_))
+            instances.append(Operation(id_, newdate, state, operation_amount, description, to, from_))
     return instances
