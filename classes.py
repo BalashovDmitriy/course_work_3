@@ -13,6 +13,6 @@ class Operation:
             self.from_ = None
 
     def __repr__(self):
-        return f'Operation(id = {self.id_}, date_ = {self.date_}), state = {self.state}, \
+        return f'Operation(id = {self.id_}, date_ = {self.date_}, state = {self.state}, \
 operation_amount = {self.operation_amount}, description = {self.description}, \
 from_ = {self.from_}, to = {self.to}'
