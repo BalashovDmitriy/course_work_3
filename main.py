@@ -1,10 +1,14 @@
-from funcs import create_instances
+from funcs import create_instances, print_result
 
 
 def main():
     operations = create_instances()
-    for operation in operations:
-        print(operation)
+    counter = 0
+    for operation in reversed(operations):
+        if counter < 5:
+            print(operation)
+            if print_result(operation):
+                counter += 1
 
 
 if __name__ == '__main__':
