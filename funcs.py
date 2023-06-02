@@ -1,6 +1,7 @@
 import json
 from datetime import datetime
 from classes import Operation
+from operator import itemgetter
 
 FILE = "operations.json"
 
@@ -11,23 +12,30 @@ def load_from_json(file):
     return operations
 
 
+def database_sort_by_date(db):
+    database = []
+    for item in db:
+        if item:
+            database.append(item)
+    return sorted(database, key=itemgetter('date'))
+
+
 def create_instances():
-    operations = load_from_json(FILE)
+    database = load_from_json(FILE)
     instances = []
-    print(operations)
+    operations = database_sort_by_date(database)
     for operation in operations:
-        if operation:
-            print(operation)
-            id_ = operation['id']
+        print(operation)
+        id_ = operation['id']
 
-            date_ = operation['date']
-            thedate = datetime.fromisoformat(date_)
-            newdate = f'{thedate.day}.{thedate.month}.{thedate.year}'
+        date_ = operation['date']
+        the_date = datetime.fromisoformat(date_)
+        new_date = f'{the_date.day}.{the_date.month}.{the_date.year}'
 
-            state = operation['state']
-            operation_amount = operation['operationAmount']
-            description = operation['description']
-            from_ = operation.get('from')
-            to = operation['to']
-            instances.append(Operation(id_, newdate, state, operation_amount, description, to, from_))
+        state = operation['state']
+        operation_amount = operation['operationAmount']
+        description = operation['description']
+        from_ = operation.get('from')
+        to = operation['to']
+        instances.append(Operation(id_, new_date, state, operation_amount, description, to, from_))
     return instances
