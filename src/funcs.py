@@ -1,9 +1,9 @@
 import json
 from datetime import datetime
-from classes import Operation
+from src.classes import Operation
 from operator import itemgetter
 
-FILE = "operations.json"
+FILE = "../json/operations.json"
 
 
 def load_from_json(file):
