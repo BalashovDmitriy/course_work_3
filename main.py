@@ -1,4 +1,4 @@
-from funcs import create_instances, print_result
+from src.funcs import create_instances, print_result
 
 
 def main():
