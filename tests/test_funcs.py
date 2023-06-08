@@ -66,7 +66,6 @@ def test_create_instances():
     pass
 
 
-
 def test_print_result(db):
     id_ = db[0]["id"]
     date_ = db[0]["date"]
