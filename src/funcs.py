@@ -7,12 +7,22 @@ FILE = 'json/operations.json'
 
 
 def load_from_json(file):
+    """
+    Загружает из файла список словарей
+    :param file: файл с джейсоном
+    :return: список словарей из файла
+    """
     with open(file, encoding='utf-8') as f:
         operations = json.load(f)
     return operations
 
 
 def database_sort_by_date(db):
+    """
+    Убирает пустой словарик из списка словарей
+    :param db: список словарей
+    :return: новый список словарей
+    """
     database = []
     for item in db:
         if item:
@@ -21,6 +31,10 @@ def database_sort_by_date(db):
 
 
 def create_instances():
+    """
+    Создаёт и возвращает экземпляры класса Operation
+    :return: экземпляры класса Operation
+    """
     database = load_from_json(FILE)
     instances = []
     operations = database_sort_by_date(database)
@@ -41,6 +55,12 @@ def create_instances():
 
 
 def print_result(operation):
+    """
+    Печать результатов если поле state в экземпляре класса Operation == "EXECUTED"
+    :param operation: экземпляр класса
+    :return: True если поле экземпляра класса Operation == "EXECUTED"
+             и False в ином случае
+    """
     if operation.state == 'EXECUTED':
         print(f'{operation.date_} {operation.description}')
 
@@ -67,10 +87,20 @@ def print_result(operation):
 
 
 def format_account(nums):
+    """
+    Форматирование счёта в соответствие с ТЗ
+    :param nums: список слов
+    :return: отформатированная строка
+    """
     return f'{nums[0]} **{nums[-1][-4:]}'
 
 
 def format_card(nums):
+    """
+    Форматирование номера карты в соответствие с ТЗ
+    :param nums: список слов
+    :return: отформатированная строка
+    """
     formatted_card = f'{nums[-1][:4]} {nums[-1][4:6]}** **** {nums[-1][-4:]}'
     the_list = []
     for element in nums:
