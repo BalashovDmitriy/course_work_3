@@ -3,7 +3,7 @@ from datetime import datetime
 from src.classes import Operation
 from operator import itemgetter
 
-FILE = "../json/operations.json"
+FILE = 'json/operations.json'
 
 
 def load_from_json(file):
@@ -47,15 +47,15 @@ def print_result(operation):
         if operation.from_:
             numbers = operation.from_.split()
             if len(numbers[-1]) == 16:
-                format_card(numbers)
+                print(format_card(numbers))
             elif len(numbers[-1]) == 20:
-                format_account(numbers)
+                print(format_account(numbers), end="")
             print(" -> ", end="")
             numbers = operation.to.split()
             if len(numbers[-1]) == 16:
-                format_card(numbers)
+                print(format_card(numbers))
             elif len(numbers[-1]) == 20:
-                format_account(numbers)
+                print(format_account(numbers), end="")
             print()
         else:
             print(f"Счёт **{operation.to[-4:]}")
@@ -67,12 +67,14 @@ def print_result(operation):
 
 
 def format_account(nums):
-    print(f"{nums[0]} **{nums[-1][-4:]}", end="")
+    return f'{nums[0]} **{nums[-1][-4:]}'
 
 
 def format_card(nums):
     formatted_card = f'{nums[-1][:4]} {nums[-1][4:6]}** **** {nums[-1][-4:]}'
+    the_list = []
     for element in nums:
         if element != nums[-1]:
-            print(element, end=" ")
-    print(formatted_card, end="")
+            the_list.append(element)
+    the_list.append(formatted_card)
+    return " ".join(the_list)
