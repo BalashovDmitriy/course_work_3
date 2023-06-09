@@ -1,42 +1,7 @@
 import json
 
-import pytest
-
 from src.classes import Operation
-from src.funcs import database_sort_by_date, load_from_json, print_result, format_account, format_card
-
-
-@pytest.fixture
-def db():
-    return [{
-        "id": 414894334,
-        "state": "EXECUTED",
-        "date": "2019-06-30T15:11:53.136004",
-        "operationAmount": {
-            "amount": "95860.47",
-            "currency": {
-                "name": "руб.",
-                "code": "RUB"
-            }
-        },
-        "description": "Перевод со счета на счет",
-        "from": "Счет 59956820797131895975",
-        "to": "Счет 43475624104328495820"
-    },
-        {},
-        {
-            "id": 509552992,
-            "state": "EXECUTED",
-            "date": "2019-04-19T12:02:30.129240",
-            "operationAmount": {
-                "amount": "81513.74",
-                "currency": {
-                    "name": "руб.",
-                    "code": "RUB"
-                }
-            }
-        }
-    ]
+from src.funcs import database_sort_by_date, load_from_json, print_result, format_account, format_card, create_instances
 
 
 def test_load_from_json():
@@ -46,39 +11,33 @@ def test_load_from_json():
     assert load_from_json("json/operations.json") == operations
 
 
-def test_database_sort_by_date(db):
-    assert database_sort_by_date(db) == [{'date': '2019-04-19T12:02:30.129240',
-                                          'id': 509552992,
-                                          'operationAmount': {'amount': '81513.74',
-                                                              'currency': {'code': 'RUB', 'name': 'руб.'}},
-                                          'state': 'EXECUTED'},
-                                         {'date': '2019-06-30T15:11:53.136004',
-                                          'description': 'Перевод со счета на счет',
-                                          'from': 'Счет 59956820797131895975',
-                                          'id': 414894334,
-                                          'operationAmount': {'amount': '95860.47',
-                                                              'currency': {'code': 'RUB', 'name': 'руб.'}},
-                                          'state': 'EXECUTED',
-                                          'to': 'Счет 43475624104328495820'}]
+def test_database_sort_by_date(database):
+    assert database_sort_by_date(database) == [{'date': '2019-04-19T12:02:30.129240',
+                                                'description': 'Перевод с карты на карту',
+                                                'from': 'Maestro 9171987821259925',
+                                                'id': 509552992,
+                                                'operationAmount': {'amount': '81513.74',
+                                                                    'currency': {'code': 'RUB', 'name': 'руб.'}},
+                                                'state': 'EXECUTED',
+                                                'to': 'МИР 2052809263194182'},
+
+                                               {'date': '2019-06-30T15:11:53.136004',
+                                                'description': 'Перевод со счета на счет',
+                                                'from': 'Счет 59956820797131895975',
+                                                'id': 414894334,
+                                                'operationAmount': {'amount': '95860.47',
+                                                                    'currency': {'code': 'RUB', 'name': 'руб.'}},
+                                                'state': 'EXECUTED',
+                                                'to': 'Счет 43475624104328495820'}]
 
 
-def test_create_instances():
-    pass
+def test_create_instances(database, test_operations_for_create_instances):
+    assert create_instances(database) == test_operations_for_create_instances
 
 
-def test_print_result(db):
-    id_ = db[0]["id"]
-    date_ = db[0]["date"]
-    state = db[0]["state"]
-    operation_amount = db[0]["operationAmount"]
-    description = db[0]["description"]
-    to = db[0]["to"]
-    from_ = db[0]["from"]
-
-    operation = Operation(id_, date_, state, operation_amount, description, to, from_)
-    assert print_result(operation) is True
-    operation.state = "CANCELLED"
-    assert print_result(operation) is False
+def test_print_result(test_operation, test_operation_3):
+    assert print_result(test_operation) is True
+    assert print_result(test_operation_3) is False
 
 
 def test_format_account():

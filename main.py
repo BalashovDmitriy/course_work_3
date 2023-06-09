@@ -1,8 +1,11 @@
-from src.funcs import create_instances, print_result
+from src.funcs import create_instances, print_result, load_from_json
+
+FILE = 'json/operations.json'
 
 
 def main():
-    operations = create_instances()
+    database = load_from_json(FILE)
+    operations = create_instances(database)
     counter = 0
     for operation in reversed(operations):
         if counter < 5:

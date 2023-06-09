@@ -3,8 +3,6 @@ from datetime import datetime
 from src.classes import Operation
 from operator import itemgetter
 
-FILE = 'json/operations.json'
-
 
 def load_from_json(file):
     """
@@ -19,9 +17,9 @@ def load_from_json(file):
 
 def database_sort_by_date(db):
     """
-    Убирает пустой словарик из списка словарей
+    Убирает пустой словарик из списка словарей и сортирует по ключу 'date'
     :param db: список словарей
-    :return: новый список словарей
+    :return: новый отсортированный список словарей
     """
     database = []
     for item in db:
@@ -30,12 +28,11 @@ def database_sort_by_date(db):
     return sorted(database, key=itemgetter('date'))
 
 
-def create_instances():
+def create_instances(database):
     """
     Создаёт и возвращает экземпляры класса Operation
     :return: экземпляры класса Operation
     """
-    database = load_from_json(FILE)
     instances = []
     operations = database_sort_by_date(database)
     for operation in operations:
