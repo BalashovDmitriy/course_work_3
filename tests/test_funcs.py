@@ -4,11 +4,8 @@ from src.classes import Operation
 from src.funcs import database_sort_by_date, load_from_json, print_result, format_account, format_card, create_instances
 
 
-def test_load_from_json():
-    file = "json/operations.json"
-    with open(file, encoding='utf-8') as f:
-        operations = json.load(f)
-    assert load_from_json("json/operations.json") == operations
+def test_load_from_json(database):
+    assert load_from_json("json/test.json") == database
 
 
 def test_database_sort_by_date(database):
