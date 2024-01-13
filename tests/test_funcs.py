@@ -1,6 +1,3 @@
-import json
-
-from src.classes import Operation
 from src.funcs import database_sort_by_date, load_from_json, print_result, format_account, format_card, create_instances
 
 
